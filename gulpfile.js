@@ -10,7 +10,7 @@ var browserSync = require('browser-sync').create();
 var reload = browserSync.reload;
 
 //全域安裝gulp-cli  gulp3.9.1 npm i gulp-cli -g  
-//專案安專  npm i gulp3.9.1 (node版本使用11.1)
+//專案安專  npm i gulp3.9.1 (node版本使用11.1)//用gulp4會錯誤
 //安裝 npm i gulp-clean-css --save-dev
 //安裝  npm install --save-dev gulp-concat
 //安裝 npm install node-sass gulp-sass --save-dev
@@ -25,7 +25,7 @@ gulp.task('hello',function(){
 
 gulp.task('moveHtml',function(){
     //src 來源 
-    return gulp.src('*.html')
+    return gulp.src('./dev/*.html')
     //pipe 透過管道 dest 目的地
     .pipe(gulp.dest('dest/'))
 })
@@ -116,5 +116,5 @@ gulp.task('default',function(){
         }
     })
     gulp.watch('./sass/*.scss',['sassConcatMiniCss']).on('change',reload);
-    gulp.watch(['./*.html','./**/*.html'],['fileinclude']).on('change',reload);
+    gulp.watch(['./dev/*.html','./dev/layout/*.html'],['fileinclude']).on('change',reload);
 })
