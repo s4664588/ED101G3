@@ -30,75 +30,75 @@ gulp.task('moveHtml',function(){
     .pipe(gulp.dest('dest/'))
 })
 
-gulp.task('moveCss',function(){
-    //src 來源 
-    return gulp.src('css/*.css')
-    //pipe 透過管道 dest 目的地
-    .pipe(gulp.dest('dest/css'))
-})
+// gulp.task('moveCss',function(){
+//     //src 來源 
+//     return gulp.src('css/*.css')
+//     //pipe 透過管道 dest 目的地
+//     .pipe(gulp.dest('dest/css'))
+// })
 
 //壓縮Css  gulp-clean-css
-gulp.task('miniCss',function(){
-    //src 來源 
-    return gulp.src('css/*.css')
-    //壓縮
-    .pipe(cleanCSS({compatibility: 'ie8'}))
-    //pipe 透過管道 dest 目的地
-    .pipe(gulp.dest('dest/css/min'))
-})
+// gulp.task('miniCss',function(){
+//     //src 來源 
+//     return gulp.src('css/*.css')
+//     //壓縮
+//     .pipe(cleanCSS({compatibility: 'ie8'}))
+//     //pipe 透過管道 dest 目的地
+//     .pipe(gulp.dest('dest/css/min'))
+// })
 
 //concat 合併
-gulp.task('concatCss',function(){
-    //src 來源 
-    return gulp.src('css/*.css')
-    //合併
-    .pipe(concat('all.css'))
-    //pipe 透過管道 dest 目的地
-    .pipe(gulp.dest('dest/css'))
-})
+// gulp.task('concatCss',function(){
+//     //src 來源 
+//     return gulp.src('css/*.css')
+//     //合併
+//     .pipe(concat('all.css'))
+//     //pipe 透過管道 dest 目的地
+//     .pipe(gulp.dest('dest/css'))
+// })
 
 //合併+壓縮
-gulp.task('concatMiniCss',function(){
-    //src 來源 
-    return gulp.src('css/*.css')
-    //合併
-    .pipe(concat('all.css'))
-    //壓縮
-    .pipe(cleanCSS({compatibility: 'ie8'}))
-    //pipe 透過管道 dest 目的地
-    .pipe(gulp.dest('dest/css/min'))
-})
+// gulp.task('concatMiniCss',function(){
+//     //src 來源 
+//     return gulp.src('css/*.css')
+//     //合併
+//     .pipe(concat('all.css'))
+//     //壓縮
+//     .pipe(cleanCSS({compatibility: 'ie8'}))
+//     //pipe 透過管道 dest 目的地
+//     .pipe(gulp.dest('dest/css/min'))
+//})
 
 //SASS功能
 gulp.task('sass', function () {
-    return gulp.src('./sass/*.scss')
+    return gulp.src('./dev/sass/*.scss')
     .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('./css'));
+    .pipe(gulp.dest('./dest/css'));
     });
 
 //SASS轉譯 + 合併 + 壓縮 O
-gulp.task('sassConcatMiniCss',['sass'],function(){
-    //src 來源 
-    return gulp.src('css/*.css')
-    //合併
-    .pipe(concat('all.css'))
-    //壓縮
-    .pipe(cleanCSS({compatibility: 'ie8'}))
-    //pipe 透過管道 dest 目的地
-    .pipe(gulp.dest('dest/css/min'))
-})
+// gulp.task('sassConcatMiniCss',['sass'],function(){
+//     //src 來源 
+//     return gulp.src('css/*.css')
+//     //合併
+//     .pipe(concat('all.css'))
+//     //壓縮
+//    // .pipe(cleanCSS({compatibility: 'ie8'}))
+//     //pipe 透過管道 dest 目的地
+//     .pipe(gulp.dest('dest/css/min'))
+// })
 
 //監看
 gulp.task('watch',function(){
     //watch(所監看的目錄途徑,偵測到變更後所使用的方法)
-    gulp.watch('./sass/*.scss',['sass']);
-    gulp.watch('./*.html',['moveHtml']);
+    gulp.watch('./dev/sass/*.scss',['sass']);
+    gulp.watch('./dev/*.html',['moveHtml']);
 
 })
 
 //HTML模板 O
 gulp.task('fileinclude', function() {
-    gulp.src(['*.html'])
+    gulp.src(['./dev/*.html'])
     .pipe(fileinclude({
         prefix: '@@',
         basepath: '@file'
@@ -110,11 +110,11 @@ gulp.task('fileinclude', function() {
 //browser-Sync(小型的阿帕契)  設定default 就可以直接在終端機中使用 gulp 執行 O
 gulp.task('default',function(){
     browserSync.init({
-        server: {
-            baseDir: './dest',
-            index: 'index.html'
+        server:{
+            baseDir:"./dest",
+            index: "index.html"
         }
-    })
-    gulp.watch('./sass/*.scss',['sassConcatMiniCss']).on('change',reload);
-    gulp.watch(['./dev/*.html','./dev/layout/*.html'],['fileinclude']).on('change',reload);
+    });
+    gulp.watch('./sass/*.scss',['sass']).on('change',reload);
+    gulp.watch(['./dev/*.html','./dev/**/*.html'],['fileinclude']).on('change',reload);
 })
