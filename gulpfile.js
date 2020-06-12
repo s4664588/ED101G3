@@ -30,6 +30,20 @@ gulp.task('moveHtml',function(){
     .pipe(gulp.dest('dest/'))
 })
 
+gulp.task('moveJS',function(){
+    //src 來源 
+    return gulp.src('./dev/js/*.js')
+    //pipe 透過管道 dest 目的地
+    .pipe(gulp.dest('./dest/js'))
+})
+
+gulp.task('movephp',function(){
+    //src 來源 
+    return gulp.src('./dev/php/*.php')
+    //pipe 透過管道 dest 目的地
+    .pipe(gulp.dest('./dest/php'))
+})
+
 // gulp.task('moveCss',function(){
 //     //src 來源 
 //     return gulp.src('css/*.css')
@@ -116,5 +130,7 @@ gulp.task('default',function(){
         }
     });
     gulp.watch('./sass/*.scss',['sass']).on('change',reload);
+    gulp.watch('./dev/php/*.php',['movephp']).on('change',reload);
+    gulp.watch('./dev/js/*.js',['movejs']).on('change',reload);
     gulp.watch(['./dev/*.html','./dev/**/*.html'],['fileinclude']).on('change',reload);
 })
