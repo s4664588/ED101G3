@@ -4,6 +4,7 @@ var concat = require('gulp-concat');
 var sass = require('gulp-sass');
 //fileinclude功能
 var fileinclude = require('gulp-file-include');
+const { dest } = require('gulp');
 //browserSync的功能
 var browserSync = require('browser-sync').create();
 //browserSync 修正後重整功能
@@ -120,7 +121,12 @@ gulp.task('fileinclude', function() {
     .pipe(gulp.dest('./dest'));
 });
 
-
+//壓圖
+gulp.task('minimage',function(){
+    gulp.src('./dev/images')
+    .pipe(imagemin())
+    .pipe(gulp.dest(dest/images))
+})
 //browser-Sync(小型的阿帕契)  設定default 就可以直接在終端機中使用 gulp 執行 O
 gulp.task('default',function(){
     browserSync.init({
