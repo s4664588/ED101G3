@@ -9,6 +9,8 @@ const { dest } = require('gulp');
 var browserSync = require('browser-sync').create();
 //browserSync 修正後重整功能
 var reload = browserSync.reload;
+//壓圖
+const imagemin =require('gulp-imagemin');
 
 //全域安裝gulp-cli  gulp3.9.1 npm i gulp-cli -g  
 //專案安專  npm i gulp3.9.1 (node版本使用11.1)//用gulp4會錯誤
@@ -123,9 +125,9 @@ gulp.task('fileinclude', function() {
 
 //壓圖
 gulp.task('minimage',function(){
-    gulp.src('./dev/images')
+    gulp.src('./dev/images/*')
     .pipe(imagemin())
-    .pipe(gulp.dest(dest/images))
+    .pipe(gulp.dest('dest/images'))
 })
 //browser-Sync(小型的阿帕契)  設定default 就可以直接在終端機中使用 gulp 執行 O
 gulp.task('default',function(){
